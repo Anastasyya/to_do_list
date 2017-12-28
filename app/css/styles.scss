@@ -1,7 +1,21 @@
 $main-color: red;
+html {
+  height: 100%;
+  background-color: #8dc5ef;
+}
 body {
-  background-color: $main-color;
-  color: green;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a5fcd8+0,8dc5ef+100 */
+background: #a5fcd8; /* Old browsers */
+background: -moz-linear-gradient(top, #a5fcd8 0%, #8dc5ef 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #a5fcd8 0%,#8dc5ef 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #a5fcd8 0%,#8dc5ef 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a5fcd8', endColorstr='#8dc5ef',GradientType=0 ); /* IE6-9 */
+background-repeat:no-repeat;
+margin: 0;
+padding-top: 0;
+}
+h1{
+  margin-top: 0;
 }
 button.active {
   border: 1px solid blue;
@@ -14,4 +28,10 @@ button.medium {
 }
 button.high {
   background-color: pink
+}
+.completed_task {
+  color: yellow
+}
+.task {
+  margin-bottom: 10rem;
 }

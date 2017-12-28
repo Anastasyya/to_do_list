@@ -28,6 +28,7 @@ class App extends React.Component {
     this.closeTask = this.closeTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.markDone = this.markDone.bind(this);
+    this.toggleVisibleTasks = this.toggleVisibleTasks.bind(this);
   }
   editTask (event){
     this.setState({
@@ -74,20 +75,29 @@ class App extends React.Component {
     this.setState({
       tasks: array
     });
+    console.log("Marked completed");
+  }
+  toggleVisibleTasks (){
+    this.setState({
+      doneTaskVisible: !this.state.doneTaskVisible
+    });
   }
     render() {
       const task_list = this.state.tasks.map((item, i) => {
-        return (<Task key = {i} index={i} message={item.message} importance={item.importance} handleDelete={this.deleteTask} handleDone={this.markDone}></Task>);
+        return (<Task key = {i} index={i} message={item.message} importance={item.importance} handleDelete={this.deleteTask} handleDone={this.markDone} done={item.done}></Task>);
+      });
+      const new_task_list = (this.state.tasks.filter((item) => item.done == false)).map((item, i) => {
+        return (<Task key = {i} index={i} message={item.message} importance={item.importance} handleDelete={this.deleteTask} handleDone={this.markDone} done={item.done}></Task>);
       });
       if (this.state.addingTask == false && this.state.doneTaskVisible == false){
         return (
           <div>
             <div>
               <h1>My to-do list</h1>
-              <button>Show completed</button>
+              <button onClick={this.toggleVisibleTasks}>Show completed</button>
               <button onClick={this.addTask}>+</button>
             </div>
-            {task_list}
+            {new_task_list}
           </div>
         );
       }else if(this.state.addingTask == true && this.state.doneTaskVisible == false){
@@ -96,10 +106,10 @@ class App extends React.Component {
             <CreateTask handleClose={this.closeTask} handleEdit={this.editTask} messageValue={this.state.messageHolder} handleImportance={this.editImportance} importanceValue={this.state.importanceHolder} handleSave={this.saveTask} />
             <div>
               <h1>My to-do list</h1>
-              <button>Show completed</button>
+              <button onClick={this.toggleVisibleTasks}>Show completed</button>
               <button onClick={this.addTask}>+</button>
             </div>
-            {task_list}
+            {new_task_list}
           </div>
         );
       }else if(this.state.addingTask == true && this.state.doneTaskVisible == true){
@@ -108,7 +118,7 @@ class App extends React.Component {
             <CreateTask handleClose={this.closeTask} handleEdit={this.editTask} messageValue={this.state.messageHolder} handleImportance={this.editImportance} handleSave={this.saveTask} />
             <div>
               <h1>My to-do list</h1>
-              <button>Hide completed</button>
+              <button onClick={this.toggleVisibleTasks}>Hide completed</button>
               <button onClick={this.addTask}>+</button>
             </div>
             {task_list}
@@ -119,7 +129,7 @@ class App extends React.Component {
           <div>
             <div>
               <h1>My to-do list</h1>
-              <button>Hide completed</button>
+              <button onClick={this.toggleVisibleTasks}>Hide completed</button>
               <button onClick={this.addTask}>+</button>
             </div>
             {task_list}
@@ -131,10 +141,8 @@ class App extends React.Component {
 class Task extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      done: false
-    }
     this.delete = this.delete.bind(this);
+    this.done = this.done.bind(this);
   }
   delete (){
     this.props.handleDelete(this.props.index);
@@ -142,25 +150,22 @@ class Task extends React.Component {
   }
   done (){
     this.props.handleDone(this.props.index);
-    this.setState({
-      done: true
-    });
   }
    render(){
-     if (this.state.done == false){
+     if (this.props.done == false){
      return (
-       <div>
-         {this.props.message}
+       <div className="task">
+         <span className = "new_task">{this.props.message}</span>
          <button onClick={this.delete}>delete</button>
-         <button onclick={this.done}>done</button>
+         <button onClick={this.done}>done</button>
          <button className = {this.props.importance}>Importance</button>
        </div>
      );
    }else {
        return(
-         <div>
-           {this.props.message}
-           <button>delete</button>
+         <div className="task">
+           <span className = "completed_task">{this.props.message}</span>
+           <button onClick={this.delete}>delete</button>
            <button className = {this.props.importance}>Importance</button>
          </div>
        );
@@ -170,9 +175,6 @@ class Task extends React.Component {
 class CreateTask extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      saved: false
-    }
   }
   render (){
     if (this.props.importanceValue == 'low'){
