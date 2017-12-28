@@ -3,3 +3,15 @@ body {
   background-color: $main-color;
   color: green;
 }
+button.active {
+  border: 1px solid blue;
+}
+button.low {
+  background-color: green
+}
+button.medium {
+  background-color: yellow
+}
+button.high {
+  background-color: pink
+}
