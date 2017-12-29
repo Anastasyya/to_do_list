@@ -1,7 +1,8 @@
-$main-color: red;
+// Main-------------------------------
 html {
   height: 100%;
   background-color: #8dc5ef;
+  font-family: 'Roboto', sans-serif;
 }
 body {
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a5fcd8+0,8dc5ef+100 */
@@ -11,27 +12,154 @@ background: -webkit-linear-gradient(top, #a5fcd8 0%,#8dc5ef 100%); /* Chrome10-2
 background: linear-gradient(to bottom, #a5fcd8 0%,#8dc5ef 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a5fcd8', endColorstr='#8dc5ef',GradientType=0 ); /* IE6-9 */
 background-repeat:no-repeat;
-margin: 0;
-padding-top: 0;
+}
+// Colors-------------------------------
+$main-font-color: #6C6C6C;
+$additional-font-color: #B8B8B8;
+$ongradient-font-color: #5FA59B;
+$button-font-color: white;
+$main-active-element-color: #3EEBE2;
+$additional-active-element-color: #767676;
+$active-button-color: #4FDE7C;
+$button-hover: #4ED97A;
+$list-background-color: white;
+$light-background-borders: #ECECEC;
+$form-background-color: #F5FFFD;
+$form-input-color: white;
+.list_container {
+  background-color: $list-background-color;
+}
+//Layout -------------------------------
+body {
+  color: $main-font-color;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 h1{
   margin-top: 0;
+  color: $ongradient-font-color;
+  text-align: center;
 }
-button.active {
-  border: 1px solid blue;
+.main_container {
+  padding-top: 4rem;
 }
-button.low {
-  background-color: green
+.tasks_container {
+  padding: 1rem 2rem;
+  border: 1px solid $light-background-borders;
 }
-button.medium {
-  background-color: yellow
+.head_container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  padding: 1.5rem 2rem;
+  border: 1px solid $light-background-borders;
+  div:nth-of-type(1){
+  flex: 0 1 25%;
+  align-self: center;
 }
-button.high {
-  background-color: pink
+  div:nth-of-type(2){
+  flex: 0 1 65%;
+  align-self: center;
+  }
+  div:nth-of-type(3){
+  flex: 0 1 10%;
+  align-self: center;
+  text-align: right;
+}
+ a {
+  color: $main-active-element-color;
+  text-decoration: underline;
+  cursor: pointer;
+ }
+}
+.add_button {
+  border-radius: 50%;
+  border: none;
+  background-color: $active-button-color;
+  color: $button-font-color;
+  font-size: 1.6rem;
+  padding: 0px 6px 2px 6px;
+  text-align: center;
+}
+.add_button:hover {
+  background-color: $button-hover;
+}
+.regular_button {
+  border: none;
+  font-size: 1rem;
+  padding: 5px 12px;
+  border-radius: 10px;
+}
+.neg_action {
+  @extend .regular_button;
+  background: transparent;
+  color: $additional-active-element-color;
+  text-decoration: underline;
+}
+.pos_action {
+  @extend .regular_button;
+  color: white;
+  background: $active-button-color;
+}
+.new_task_form {
+  background-color: $form-background-color;
+  padding: 1rem 2rem;
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 0rem;
+  }
+  input {
+    background: $form-input-color;
+    border: 1px solid $form-input-color;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    width: 100%;
+    height: 2rem;
+    caret-color: $main-active-element-color;
+
+  }
+  span{
+    vertical-align:-20%;
+    color: $additional-font-color;
+  }
+  div:nth-of-type(2){
+    text-align: right;
+  }
+}
+div.low, div.medium, div.high {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  display: inline-block;
+}
+button.low, button.medium, button.high {
+  border-radius: 50%;
+  height: 18px;
+  width: 10px;
+  border: none;
+}
+button.selected {
+  border: 1px solid $main-active-element-color;
+}
+div.low, button.low {
+  background-color: #CFCFCF;
+}
+div.medium, button.medium {
+  background-color: #FFC1C1;
+}
+div.high, button.high {
+  background-color: #FF7575;
 }
 .completed_task {
   color: yellow
 }
 .task {
-  margin-bottom: 10rem;
+  margin-bottom: 0.5rem;
+}
+// @Media--------------------------------
+@media only screen and (min-width: 700px) {
+  .main_container {
+    width: 460px;
+  }
 }

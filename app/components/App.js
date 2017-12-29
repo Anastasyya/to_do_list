@@ -7,8 +7,8 @@ class App extends React.Component {
     this.state = {
       addingTask: false,
       doneTaskVisible : false,
-      messageHolder: "",
       importanceHolder: 'low',
+      messageHolder: "",
       tasks: [
         {
           message: 'create new task',
@@ -39,17 +39,12 @@ class App extends React.Component {
     this.setState({
       importanceHolder: event.target.value,
     });
-    console.log(this.state.importanceHolder);
-  }
-  addTask (){
-     this.setState({
-       addingTask: true
-     });
   }
   closeTask (){
      this.setState({
        addingTask: false,
-       messageHolder: ""
+       messageHolder: "",
+       importanceHolder: 'low'
      });
   }
   saveTask (){
@@ -75,12 +70,17 @@ class App extends React.Component {
     this.setState({
       tasks: array
     });
-    console.log("Marked completed");
   }
   toggleVisibleTasks (){
     this.setState({
       doneTaskVisible: !this.state.doneTaskVisible
     });
+    console.log("importance in toggle task " + this.state.importanceHolder);
+  }
+  addTask (){
+     this.setState({
+       addingTask: true
+     });
   }
     render() {
       const task_list = this.state.tasks.map((item, i) => {
@@ -89,51 +89,73 @@ class App extends React.Component {
       const new_task_list = (this.state.tasks.filter((item) => item.done == false)).map((item, i) => {
         return (<Task key = {i} index={i} message={item.message} importance={item.importance} handleDelete={this.deleteTask} handleDone={this.markDone} done={item.done}></Task>);
       });
+      const arr = this.state.tasks.filter((item) => item.done == false);
+      const count = arr.length;
       if (this.state.addingTask == false && this.state.doneTaskVisible == false){
         return (
-          <div>
-            <div>
-              <h1>My to-do list</h1>
-              <button onClick={this.toggleVisibleTasks}>Show completed</button>
-              <button onClick={this.addTask}>+</button>
-            </div>
-            {new_task_list}
+          <div className = "main_container">
+            <h1>My to-do list</h1>
+              <div className = "list_container">
+                <div className = "head_container">
+                  <div>{count} New</div>
+                  <div><a onClick={this.toggleVisibleTasks}>Show completed</a></div>
+                  <div><button onClick={this.addTask} className = "add_button">+</button></div>
+                </div>
+                <div className = "tasks_container">
+                  {new_task_list}
+                </div>
+              </div>
           </div>
         );
       }else if(this.state.addingTask == true && this.state.doneTaskVisible == false){
         return (
-          <div>
-            <CreateTask handleClose={this.closeTask} handleEdit={this.editTask} messageValue={this.state.messageHolder} handleImportance={this.editImportance} importanceValue={this.state.importanceHolder} handleSave={this.saveTask} />
-            <div>
+          <div className = "main_container">
               <h1>My to-do list</h1>
-              <button onClick={this.toggleVisibleTasks}>Show completed</button>
-              <button onClick={this.addTask}>+</button>
-            </div>
+              <div className = "list_container">
+                <div className = "head_container">
+                 <div>{count} New</div>
+                 <div><a onClick={this.toggleVisibleTasks}>Show completed</a></div>
+                 <div><button onClick={this.addTask} className = "add_button">+</button></div>
+               </div>
+              <CreateTask handleClose={this.closeTask} handleEdit={this.editTask} messageValue={this.state.messageHolder} handleImportance={this.editImportance} importanceValue={this.state.importanceHolder} handleSave={this.saveTask} />
+            <div className = "tasks_container">
             {new_task_list}
           </div>
+        </div>
+      </div>
         );
       }else if(this.state.addingTask == true && this.state.doneTaskVisible == true){
         return (
-          <div>
-            <CreateTask handleClose={this.closeTask} handleEdit={this.editTask} messageValue={this.state.messageHolder} handleImportance={this.editImportance} handleSave={this.saveTask} />
-            <div>
+          <div className = "main_container">
+            <CreateTask handleClose={this.closeTask} handleEdit={this.editTask} messageValue={this.state.messageHolder} handleImportance={this.editImportance} importanceValue={this.state.importanceHolder} handleSave={this.saveTask} />
               <h1>My to-do list</h1>
-              <button onClick={this.toggleVisibleTasks}>Hide completed</button>
-              <button onClick={this.addTask}>+</button>
-            </div>
+              <div className = "list_container">
+               <div className = "head_container">
+               <div>{count} New</div>
+               <div><a onClick={this.toggleVisibleTasks}>Hide completed</a></div>
+               <div><button onClick={this.addTask} className = "add_button">+</button></div>
+               </div>
+            <div className = "tasks_container">
             {task_list}
           </div>
+        </div>
+      </div>
         );
       }else{
         return (
-          <div>
-            <div>
+          <div className = "main_container">
               <h1>My to-do list</h1>
-              <button onClick={this.toggleVisibleTasks}>Hide completed</button>
-              <button onClick={this.addTask}>+</button>
+              <div className = "list_container">
+               <div className = "head_container">
+               <div>{count} New</div>
+               <div><a onClick={this.toggleVisibleTasks}>Hide completed</a></div>
+               <div><button onClick={this.addTask} className = "add_button">+</button></div>
             </div>
+            <div className = "tasks_container">
             {task_list}
           </div>
+          </div>
+        </div>
         );
       }
     }
@@ -146,7 +168,6 @@ class Task extends React.Component {
   }
   delete (){
     this.props.handleDelete(this.props.index);
-    console.log('removing');
   }
   done (){
     this.props.handleDone(this.props.index);
@@ -155,18 +176,18 @@ class Task extends React.Component {
      if (this.props.done == false){
      return (
        <div className="task">
+         <div className = {this.props.importance} />
          <span className = "new_task">{this.props.message}</span>
          <button onClick={this.delete}>delete</button>
          <button onClick={this.done}>done</button>
-         <button className = {this.props.importance}>Importance</button>
        </div>
      );
    }else {
        return(
-         <div className="task">
+         <div className="completed_task">
+           <div className = {this.props.importance}></div>
            <span className = "completed_task">{this.props.message}</span>
            <button onClick={this.delete}>delete</button>
-           <button className = {this.props.importance}>Importance</button>
          </div>
        );
      }
@@ -176,36 +197,45 @@ class CreateTask extends React.Component {
   constructor(props){
     super(props);
   }
+  componentDidMount(){
+   document.getElementById("task-input").focus();
+}
   render (){
     if (this.props.importanceValue == 'low'){
     return(
-      <div>
-        <input type="text" onChange={this.props.handleEdit} value={this.props.messageValue} />
-        <button value='low' onClick={this.props.handleImportance} className='active'>Low</button>
-        <button value='medium'onClick={this.props.handleImportance}>Medium</button>
-        <button value='high'onClick={this.props.handleImportance}>High</button>
-        <button onClick={this.props.handleClose}>Close</button>
-        <button onClick={this.props.handleSave}>Save</button>
+      <div class="new_task_form">
+        <h2>New task</h2>
+        <input type="text" id='task-input' onChange={this.props.handleEdit} value={this.props.messageValue} />
+        <div>
+          <span>Importance: </span>
+          <button value='low' onClick={this.props.handleImportance} className='low selected' />
+          <button value='medium'onClick={this.props.handleImportance} className = 'medium' />
+          <button value='high'onClick={this.props.handleImportance} className = 'high' />
+        </div>
+        <div>
+          <button className = 'neg_action' onClick={this.props.handleClose}>Cancel</button>
+          <button className = 'pos_action' onClick={this.props.handleSave}>Save</button>
+        </div>
       </div>
     );
   }else if(this.props.importanceValue == 'medium'){
    return(
     <div>
       <input type="text" onChange={this.props.handleEdit} value={this.props.messageValue} />
-      <button value='low' onClick={this.props.handleImportance}>Low</button>
-      <button value='medium'onClick={this.props.handleImportance} className='active'>Medium</button>
-      <button value='high'onClick={this.props.handleImportance}>High</button>
+      <button value='low' onClick={this.props.handleImportance} className = 'low' />
+      <button value='medium'onClick={this.props.handleImportance} className='medium selected' />
+      <button value='high'onClick={this.props.handleImportance} className = 'high' />
       <button onClick={this.props.handleClose}>Close</button>
       <button onClick={this.props.handleSave}>Save</button>
     </div>
   );
-  }else {
+}else if (this.props.importanceValue == 'high'){
     return(
      <div>
        <input type="text" onChange={this.props.handleEdit} value={this.props.messageValue} />
-       <button value='low' onClick={this.props.handleImportance}>Low</button>
-       <button value='medium'onClick={this.props.handleImportance}>Medium</button>
-       <button value='high'onClick={this.props.handleImportance} className='active'>High</button>
+       <button value='low' onClick={this.props.handleImportance} className = 'low' />
+       <button value='medium'onClick={this.props.handleImportance} className = 'medium' />
+       <button value='high'onClick={this.props.handleImportance} className='high selected' />
        <button onClick={this.props.handleClose}>Close</button>
        <button onClick={this.props.handleSave}>Save</button>
      </div>
