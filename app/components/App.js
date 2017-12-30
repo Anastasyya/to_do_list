@@ -176,10 +176,18 @@ class Task extends React.Component {
      if (this.props.done == false){
      return (
        <div className="task">
-         <div className = {this.props.importance} />
-         <span className = "new_task">{this.props.message}</span>
-         <button onClick={this.delete}>delete</button>
-         <button onClick={this.done}>done</button>
+         <div>
+           <div className = {this.props.importance} />
+         </div>
+         <div>
+           <span className = "new_task">{this.props.message}</span>
+         </div>
+         <div>
+           <button className = "delete_task" onClick={this.delete}>delete</button>
+         </div>
+         <div>
+           <button className = "mark_task" onClick={this.done}></button>
+         </div>
        </div>
      );
    }else {
@@ -220,25 +228,37 @@ class CreateTask extends React.Component {
     );
   }else if(this.props.importanceValue == 'medium'){
    return(
-    <div>
-      <input type="text" onChange={this.props.handleEdit} value={this.props.messageValue} />
-      <button value='low' onClick={this.props.handleImportance} className = 'low' />
-      <button value='medium'onClick={this.props.handleImportance} className='medium selected' />
-      <button value='high'onClick={this.props.handleImportance} className = 'high' />
-      <button onClick={this.props.handleClose}>Close</button>
-      <button onClick={this.props.handleSave}>Save</button>
-    </div>
+     <div class="new_task_form">
+       <h2>New task</h2>
+       <input type="text" id='task-input' onChange={this.props.handleEdit} value={this.props.messageValue} />
+       <div>
+         <span>Importance: </span>
+         <button value='low' onClick={this.props.handleImportance} className='low' />
+         <button value='medium'onClick={this.props.handleImportance} className = 'medium selected' />
+         <button value='high'onClick={this.props.handleImportance} className = 'high' />
+       </div>
+       <div>
+         <button className = 'neg_action' onClick={this.props.handleClose}>Cancel</button>
+         <button className = 'pos_action' onClick={this.props.handleSave}>Save</button>
+       </div>
+     </div>
   );
 }else if (this.props.importanceValue == 'high'){
     return(
-     <div>
-       <input type="text" onChange={this.props.handleEdit} value={this.props.messageValue} />
-       <button value='low' onClick={this.props.handleImportance} className = 'low' />
-       <button value='medium'onClick={this.props.handleImportance} className = 'medium' />
-       <button value='high'onClick={this.props.handleImportance} className='high selected' />
-       <button onClick={this.props.handleClose}>Close</button>
-       <button onClick={this.props.handleSave}>Save</button>
-     </div>
+      <div class="new_task_form">
+        <h2>New task</h2>
+        <input type="text" id='task-input' onChange={this.props.handleEdit} value={this.props.messageValue} />
+        <div>
+          <span>Importance: </span>
+          <button value='low' onClick={this.props.handleImportance} className='low' />
+          <button value='medium'onClick={this.props.handleImportance} className = 'medium' />
+          <button value='high'onClick={this.props.handleImportance} className = 'high selected' />
+        </div>
+        <div>
+          <button className = 'neg_action' onClick={this.props.handleClose}>Cancel</button>
+          <button className = 'pos_action' onClick={this.props.handleSave}>Save</button>
+        </div>
+      </div>
    );
 }
   }

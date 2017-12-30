@@ -24,7 +24,7 @@ $active-button-color: #4FDE7C;
 $button-hover: #4ED97A;
 $list-background-color: white;
 $light-background-borders: #ECECEC;
-$form-background-color: #F5FFFD;
+$form-background-color: #E5FDF8;
 $form-input-color: white;
 .list_container {
   background-color: $list-background-color;
@@ -87,9 +87,10 @@ h1{
 }
 .regular_button {
   border: none;
-  font-size: 1rem;
-  padding: 5px 12px;
-  border-radius: 10px;
+  font-size: 0.9rem;
+  padding: 5px 20px;
+  border-radius: 12px;
+  text-transform: uppercase;
 }
 .neg_action {
   @extend .regular_button;
@@ -106,6 +107,7 @@ h1{
   background-color: $form-background-color;
   padding: 1rem 2rem;
   h2 {
+    font-weight: normal;
     font-size: 1.2rem;
     margin-top: 0rem;
   }
@@ -123,6 +125,9 @@ h1{
     vertical-align:-20%;
     color: $additional-font-color;
   }
+  div:nth-of-type(1){
+    margin: 1rem 0;
+  }
   div:nth-of-type(2){
     text-align: right;
   }
@@ -138,25 +143,71 @@ button.low, button.medium, button.high {
   height: 18px;
   width: 10px;
   border: none;
+  margin: 0 2px;
 }
 button.selected {
-  border: 1px solid $main-active-element-color;
+  border: 2px solid $main-active-element-color;
 }
 div.low, button.low {
   background-color: #CFCFCF;
 }
+button.low:not(.selected){
+  border: 2px solid #CFCFCF;
+}
 div.medium, button.medium {
   background-color: #FFC1C1;
+}
+button.medium:not(.selected){
+  border: 2px solid #FFC1C1;
 }
 div.high, button.high {
   background-color: #FF7575;
 }
+button.high:not(.selected){
+  border: 2px solid #FF7575;
+}
+.delete_task {
+  visibility: hidden;
+}
+.task {
+  display: flex;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid red;
+  padding: 1rem 0;
+  div:nth-of-type(1){
+    flex: 0 1 5%;
+    align-self: center;
+  }
+  div:nth-of-type(2){
+    flex: 0 1 fit-content;
+    align-self: center;
+  }
+  div:nth-of-type(3){
+    flex: 0 1 10%;
+    align-self: center;
+  }
+  div:nth-of-type(4){
+    flex: 2 1 30%;
+    align-self: center;
+    text-align: right;
+  }
+}
+.task:hover .delete_task{
+    visibility:visible;
+}
+.mark_task {
+  border-radius: 50%;
+  border: 2px solid $main-active-element-color;
+  height: 22px;
+  width: 22px;
+  background: white;
+}
+
 .completed_task {
   color: yellow
 }
-.task {
-  margin-bottom: 0.5rem;
-}
+
 // @Media--------------------------------
 @media only screen and (min-width: 700px) {
   .main_container {
