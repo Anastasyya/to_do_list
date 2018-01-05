@@ -5,6 +5,7 @@ html {
   font-family: 'Roboto', sans-serif;
 }
 body {
+
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a5fcd8+0,8dc5ef+100 */
 background: #a5fcd8; /* Old browsers */
 background: -moz-linear-gradient(top, #a5fcd8 0%, #8dc5ef 100%); /* FF3.6-15 */
@@ -28,6 +29,7 @@ $form-background-color: #E5FDF8;
 $form-input-color: white;
 .list_container {
   background-color: $list-background-color;
+  min-height: 408px;
 }
 //Layout -------------------------------
 body {
@@ -46,7 +48,6 @@ h1{
 }
 .tasks_container {
   padding: 1rem 2rem;
-  border: 1px solid $light-background-borders;
 }
 .head_container {
   display: flex;
@@ -57,6 +58,7 @@ h1{
   div:nth-of-type(1){
   flex: 0 1 25%;
   align-self: center;
+  margin-right: 8px;
 }
   div:nth-of-type(2){
   flex: 0 1 65%;
@@ -167,17 +169,25 @@ button.high:not(.selected){
   border: 2px solid #FF7575;
 }
 .delete_task {
+  color: $additional-active-element-color;
+  font: 1.8rem/100% arial, sans-serif;
+  padding-left: 1rem;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
   visibility: hidden;
+}
+.delete_task:after {
+  content: '×'; /* UTF-8 symbol */
 }
 .task {
   display: flex;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 0.8rem;
-  border: 1px solid red;
   padding: 1rem 0;
   div:nth-of-type(1){
     flex: 0 1 5%;
     align-self: center;
+    margin-right: 8px;
   }
   div:nth-of-type(2){
     flex: 0 1 fit-content;
@@ -205,12 +215,21 @@ button.high:not(.selected){
 }
 
 .completed_task {
-  color: yellow
+  color: $additional-font-color;
+  text-decoration: line-through;
 }
 
 // @Media--------------------------------
 @media only screen and (min-width: 700px) {
   .main_container {
     width: 460px;
+  }
+}
+@media only screen and (max-width: 701px) {
+  .head_container {
+    font-size: 1rem;
+  }
+  .main_container {
+    width: 320px;
   }
 }
