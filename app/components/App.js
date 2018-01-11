@@ -34,7 +34,12 @@ class App extends React.Component {
         tasks: savedTasks
       });
     }
-    console.log(this.state.completedCount);
+    if(localStorage.getItem('doneTasks')){
+      var doneTasks = JSON.parse(localStorage.getItem('doneTasks'));
+      this.setState({
+        completedCount: doneTasks
+      });
+    }
   }
   editTask (event){
     this.setState({
@@ -68,6 +73,7 @@ class App extends React.Component {
     var array = this.state.tasks;
     if (array[i].done == true){
       this.setState((prevState) => {
+        localStorage.setItem('doneTasks', JSON.stringify(prevState.completedCount - 1));
         return {completedCount: prevState.completedCount - 1};
       });}
     array.splice(i,1);
@@ -80,10 +86,10 @@ class App extends React.Component {
     var array = this.state.tasks;
     array[i].done = true;
     this.setState((prevState) => {
+      localStorage.setItem('doneTasks', JSON.stringify(prevState.completedCount + 1));
       return {tasks: array,
       completedCount: prevState.completedCount + 1};
     });
-    console.log(this.state.completedCount);
   }
   toggleVisibleTasks (){
     this.setState({
